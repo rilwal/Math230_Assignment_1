@@ -1,0 +1,120 @@
+\documentclass[a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{bussproofs}
+\usepackage{moresize}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{colortbl}
+
+\usepackage[margin=0.5in]{geometry}
+
+\begin{document}
+Assignment 1
+
+\begin{enumerate}
+    \item \begin {enumerate} 
+    \item  \textit{It will either be sunny and warm, or it will be sunny. If it is not sunny then it will not be cloudy. Therefore it will be cloudy.}
+    \begin {enumerate} \item \textit{Translate the argument into the formal language for propositional logic.}
+                \begin{align*}
+                    \text{Let } S &= \text{It will be sunny} \\
+                    \text{Let } W &= \text{It will be warm} \\
+                    \text{Let } C &= \text{It will be cloudy}
+                \end{align*}
+
+                \begin{equation}
+                (S \land W) \lor C, \neg C \to \neg S \vdash C
+                \end{equation}
+                \\
+            \item \textit{The argument is propositionally valid; provide a natural deduction proof.}
+                \ssmall
+                \begin{prooftree}
+                            \AxiomC{$(S \land W) \lor C$}
+                                            \AxiomC{}
+                                            \RightLabel{1}
+                                        \UnaryInfC{$S \land W$}
+                                        \RightLabel{$\land E$}
+                                    \UnaryInfC{$S$}
+                                    \RightLabel{$\lor I$}
+                                \UnaryInfC{$S \lor C$}
+                                \RightLabel{$\to I,1$}
+                            \UnaryInfC{$(S \land W) \to (S \lor C)$}
+                                        \AxiomC{}
+                                        \RightLabel{2}
+                                    \UnaryInfC{$C$}
+                                    \RightLabel{$\lor I$}
+                                \UnaryInfC{$S \lor C$}
+                                \RightLabel{$\to I,2$}
+                            \UnaryInfC{$C \to (S \lor C)$}
+                            \RightLabel{$\lor E$}
+                        \TrinaryInfC{$S \lor C$}
+                            \AxiomC{$(C \to \bot) \to (S \to \bot)$}
+                                \AxiomC{}
+                                \RightLabel{3}
+                            \UnaryInfC{$C \to \bot$}
+                            \RightLabel{$\to E$}
+                        \BinaryInfC{$S \to \bot$}
+                            \AxiomC{}
+                            \RightLabel{3}
+                        \UnaryInfC{$C \to \bot$}
+                        \RightLabel{$\lor E$}
+                    \TrinaryInfC{$\bot$}
+                    \RightLabel{$\bot,3$}
+                \UnaryInfC{C}
+            \end{prooftree}
+            \medskip
+            \normalsize 
+        \item \textit{Alter, add, or remove premises (or change the conclusion) in the argument to make it formally invalid, for the same narrative.}\\
+            Change the conclusion to be $\neg C$.
+        \\ 
+    \item \textit{Give an explicit counterexample to your argument in (iii), and explain why it is a counterexample.}\\
+            
+            If we alter the conclusion to be $\neg C$, we have a counterexample as marked on the truth table below.
+            This case is a counterexample because all of the premises are true, but the conclusion ($\neg C$) is not.\\
+
+            \newcolumntype{d}{>{\columncolor{GreenYellow}}c}
+
+            \begin{tabular}{ r c | c | c | d | c | c | c}
+                &$S$ & $W$ & $C$ & $\neg C$ & $\neg S$ & $(S \land W) \lor C$ & $\neg C \to \neg S$ \\ \cline{2-8}
+                &0 & 0 & 0 & 1 & 1 & 0 & 1 \\
+                $\rightarrow$&0 & 0 & 1 & 0 & 1 & 1 & 1 \\
+                &0 & 1 & 0 & 1 & 1 & 0 & 1 \\
+                &0 & 1 & 1 & 0 & 1 & 1 & 1 \\
+                &1 & 0 & 0 & 1 & 0 & 0 & 0 \\
+                &1 & 0 & 1 & 0 & 0 & 1 & 1 \\
+                &1 & 1 & 0 & 1 & 0 & 1 & 0 \\
+                &1 & 1 & 1 & 0 & 0 & 1 & 1
+            \end{tabular}
+        \end{enumerate}
+        \bigskip
+    \item \textit{Consider the sequent $\neg \alpha \lor \beta \vdash \alpha \to \beta$}.
+            \begin{enumerate}
+                \item \textit{Provide a natural deduction proof.} \\
+                \begin{prooftree}
+                        \AxiomC{$(\alpha \to \bot) \lor \beta$}
+                                            \AxiomC{}
+                                            \RightLabel{1}
+                                        \UnaryInfC{$\alpha$}
+                                            \AxiomC{}
+                                            \RightLabel{2}
+                                        \UnaryInfC{$\alpha \to \bot$}
+                                        \RightLabel{$\to E$}
+                                    \BinaryInfC{$\bot$}
+                                    \RightLabel{$\bot$}
+                                \UnaryInfC{$\beta$}
+                                \RightLabel{$\to I,2$}
+                            \UnaryInfC{$(\alpha \to \bot) \to \beta$}
+                                    \AxiomC{}
+                                    \RightLabel{3}
+                                \UnaryInfC{$\beta$}
+                                \RightLabel{$\to I,3$}
+                            \UnaryInfC{$\beta \to \beta$}
+
+                            \RightLabel{$\lor E$}
+                        \TrinaryInfC{$\beta$}
+                        \RightLabel{$\to I,1$}
+                    \UnaryInfC{$\alpha \to \beta$} 
+                \end{prooftree}
+            \end{enumerate}
+    \end{enumerate}
+\end{enumerate}
+\end{document}
