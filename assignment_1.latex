@@ -6,15 +6,21 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage{colortbl}
 
-\usepackage[margin=0.5in]{geometry}
+\usepackage[margin=0.5cm]{geometry}
+
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+
 
 \begin{document}
 Assignment 1
 
 \begin{enumerate}
     \item \begin {enumerate} 
-    \item  \textit{It will either be sunny and warm, or it will be sunny. If it is not sunny then it will not be cloudy. Therefore it will be cloudy.}
-    \begin {enumerate} \item \textit{Translate the argument into the formal language for propositional logic.}
+    \item  \textit{It will either be sunny and warm, or it will be cloudy. If it is not sunny then it will not be cloudy. Therefore it will be cloudy.}
+    \begin {enumerate} \item \textit{Translate the argument into the formal language for propositional logic.} \\
+        Note: Here we were unsure weather to represent \textit{"it is warm"} as a seperate propositional variable from \textit{"it is sunny"}, but we chose to err on the side of doing more work
+        rather than less.
+
                 \begin{align*}
                     \text{Let } S &= \text{It will be sunny} \\
                     \text{Let } W &= \text{It will be warm} \\
@@ -67,7 +73,6 @@ Assignment 1
             Change the conclusion to be $\neg C$.
         \\ 
     \item \textit{Give an explicit counterexample to your argument in (iii), and explain why it is a counterexample.}\\
-            
             If we alter the conclusion to be $\neg C$, we have a counterexample as marked on the truth table below.
             This case is a counterexample because all of the premises are true, but the conclusion ($\neg C$) is not.\\
 
@@ -116,5 +121,106 @@ Assignment 1
                 \end{prooftree}
             \end{enumerate}
     \end{enumerate}
+
+\item \begin{enumerate}
+    \item \textit{Explain in your own words what the Soundness and Completeness theorems for natural deduction mean.} \\
+        \textbf{Soundness:} Soundness is the property of a logical system which means that anything provable with the system will be correct.
+        That is to say, if we start with well formed formulae and follow the rules of that system (eg $\to I, \to E, \lor I, \lor E, \land I, \land E$ for minimal logic),
+        any formula we derive will hold true in any case where all the premises hold. \\
+
+        \textbf{Completeness:} Completeness is the property of a logical system which means that any statement which is true given a set of premises can be proven using
+        the system. In other words, if $\Gamma \vdash \beta$ there is a deduction $_{\Gamma}^{\alpha}\mathpzc{D}$ possible in the system.
+    
+    \item \textit{Is, in your opinion, Soundess or Completeness more important?} \\
+        In our opinion soundness is more useful than completeness. A system which is complete but not sound could include the rule: $\forall \alpha, \beta: \alpha \leftrightarrow \beta$. A proof
+        given in this system has no value as it doesn't guarantee correctness. A proof in this system could be:
+
+            
+        $$ \alpha \vdash \neg \alpha$$
+        \begin{prooftree}
+            \AxiomC{$\alpha$}
+            \UnaryInfC{$\neg \alpha$}
+        \end{prooftree}
+        \bigskip
+
+        On the other hand a system which is sound but not complete is not very useful for finding proofs, as for any particular truth one might not be possible,
+        but any provided in such a system can at least be relied on to be correct.
+
+    \item \textit{Is it possible to make an invalid argument valid by adding extra premises? How about by removing premises?}\\
+        \textbf{Adding premises:} Take the example invalid argument $\alpha \vdash \beta$, then add the premise $\alpha \to \beta$, giving the valid argument $\alpha, \alpha \to \beta \vdash \beta$. Proof:
+        \begin{prooftree}
+            \AxiomC{$\alpha \to \beta$}
+            \AxiomC{$\alpha$}
+            \RightLabel{$\to E$}
+            \BinaryInfC{$\beta$}
+        \end{prooftree}
+
+        \bigskip
+
+        \textbf{Removing premises:} Any invalid argument has a counterexample $C$ by definition. This is a set of truth values for all the logical variables such that all the premises are true, but the conclusion is false.
+        Removing a premise will still leave the counterexample: it will still be true for all the remaining premises, therefore the argument will remain invalid.
+
+
+\end{enumerate}
+
+\item \begin{enumerate}
+        \item \textit{Use first order natural deduction to prove:}\begin {enumerate}
+        \item \textit{$\forall x(Fx \lor Gx) \vdash \forall xFx \lor \exists xGx$}
+
+            \ssmall
+            \begin{prooftree}
+                    \AxiomC{$\forall xFx \lor \neg \forall xFx$}               
+                         \RightLabel{$\forall E$}
+                                            \AxiomC{$\forall x(Fx \lor Gx)$}
+                                        \UnaryInfC{$Fa \lor Ga$}
+                                                        \AxiomC{}
+                                                        \RightLabel{3}
+                                                    \UnaryInfC{$\neg \forall xFx$}
+                                                                    \AxiomC{}
+                                                                    \RightLabel{2}
+                                                                \UnaryInfC{$\neg \exists x\neg Fx$} 
+                                                                        \AxiomC{}
+                                                                        \RightLabel{1}
+                                                                    \UnaryInfC{$\neg Fa$}
+                                                                    \RightLabel{$\exists I$}
+                                                                \UnaryInfC{$\exists x \neg Fx$}
+                                                                \RightLabel{$\to E$}
+                                                            \BinaryInfC{$\bot$}
+                                                            \RightLabel{$\bot,1$}
+                                                        \UnaryInfC{$Fa$}
+                                                        \RightLabel{$\forall I$}
+                                                    \UnaryInfC{$\forall xFx$}
+                                                    \RightLabel{$\to E$}
+                                                \BinaryInfC{$\bot$} 
+                                                \RightLabel{$\bot,2$}
+                                            \UnaryInfC{$\exists x(Fx \to \bot)$}
+                                            \RightLabel{$\exists E$}
+                                        \UnaryInfC{$Fa \to \bot$}
+                                            \AxiomC{}
+                                            \RightLabel{4}
+                                        \UnaryInfC{$Ga \to \bot$}
+                                        \RightLabel{$\lor E$}
+                                    \TrinaryInfC{$\bot$}
+                                    \RightLabel{$\bot,4$}
+                                \UnaryInfC{$Ga$}
+                            \RightLabel{$\exists I$}
+                            \UnaryInfC{$\exists xGx$}
+                            \RightLabel{$\lor I$}
+                        \UnaryInfC{$\forall xFx \lor \exists xGx$}
+                        \RightLabel{$\to I,3$} 
+                    \UnaryInfC{$\neg \forall xFx \to (\forall xFx \lor \exists xGx)$}
+                                \AxiomC{}
+                                \RightLabel{5}
+                            \UnaryInfC{$\forall xFx$}
+                            \RightLabel{$\lor I$}
+                        \UnaryInfC{$\forall xFx \lor \exists xGx$}
+                        \RightLabel{$\to I,5$}
+                    \UnaryInfC{$\forall xFx \to (\forall xFx \lor \exists xGx)$}
+                    \RightLabel{$\lor E$}
+                \TrinaryInfC{$\forall xFx \lor \exists xGx$}
+            \end{prooftree}
+    \end{enumerate}
+\end{enumerate}
+
 \end{enumerate}
 \end{document}
