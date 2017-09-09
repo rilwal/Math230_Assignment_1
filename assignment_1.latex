@@ -1,6 +1,7 @@
 \documentclass[a4paper]{article}
 
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{bussproofs}
 \usepackage{moresize}
 \usepackage[dvipsnames]{xcolor}
@@ -13,7 +14,7 @@
 
 \begin{document}
 Assignment 1
-
+\section{Formal Logic}
 \begin{enumerate}
     \item \begin {enumerate} 
     \item  \textit{It will either be sunny and warm, or it will be cloudy. If it is not sunny then it will not be cloudy. Therefore it will be cloudy.}
@@ -219,8 +220,120 @@ Assignment 1
                     \RightLabel{$\lor E$}
                 \TrinaryInfC{$\forall xFx \lor \exists xGx$}
             \end{prooftree}
+            \normalsize
+            \bigskip
+        \item \textit{$\vdash \forall xQx \lor \exists y \neg Qy$}
+            \begin{prooftree}
+               
+                \AxiomC{$\forall xQx \lor\neg\forall xQx $}
+
+                            \AxiomC{}
+                            \RightLabel{1}
+                        \UnaryInfC{$\forall xQx$}
+                        \RightLabel{$\lor I$}
+                    \UnaryInfC{$\forall xQx \lor \exists y\neg Qy$}
+                    \RightLabel{$\to I,1$}
+                \UnaryInfC{$\forall xQx \to \forall xQx \lor \exists y \neg Qy$}
+                                    \AxiomC{}
+                                    \RightLabel{2}
+                                \UnaryInfC{$\neg \forall xQx$}
+                                                \AxiomC{}
+                                                \RightLabel{3}
+                                            \UnaryInfC{$\neg \exists x \neg Qx$}
+                                                    \AxiomC{}
+                                                    \RightLabel{4}
+                                                \UnaryInfC{$\neg Qa$}
+                                                \RightLabel{$\exists I$}
+                                            \UnaryInfC{$\exists x \neg Qx$}
+                                            \RightLabel{$\to E$}
+                                        \BinaryInfC{$\bot$}
+                                        \RightLabel{$\bot,4$}
+                                    \UnaryInfC{$Qa$}
+                                    \RightLabel{$\forall I$}
+                                \UnaryInfC{$\forall xQx$}
+                                \RightLabel{$\to E$}
+                            \BinaryInfC{$\bot$}
+                            \RightLabel{$\bot,3$}
+                        \UnaryInfC{$\exists y \neg Qy$}
+                        \RightLabel{$\lor I$}
+                    \UnaryInfC{$\forall xQx \lor \exists y \neg Qy$}
+                    \RightLabel{$\to I,2$}
+                \UnaryInfC{$\neg \forall xQx \to \forall xQx \lor \exists y \neg Qy$}
+                \RightLabel{$\lor E$}
+                \TrinaryInfC{$\forall xQx \lor \exists y\neg Qy$}
+            \end{prooftree}
     \end{enumerate}
-\end{enumerate}
+    \bigskip
+\item \textit{Translate the following argument into the formal language for first-order logic.\\
+    \\
+        Some things are neither fluffy nor cute, but anything that is fluffy is cute.
+        So my pet cat is both fluffy and cute, because anything that isn't fluffy isn't my pet cat.
+    }\\
+\\
+    Let $Fx = x$ is fluffy, $Cx = x$ is cute, $p =$ my pet cat
+
+    $$\exists x(\neg Fx \land  \neg Cx), \forall x(Fx \to Cx), \forall x(\neg Fx \to \neg(x = p)) \vdash Fp \land Cp$$
+
+\item \textit{Give an explicit counterexample which shows the following: \\
+    \\
+    $\exists xPx \land \exists yQy \quad \nvdash \quad \exists x(Px \land Qx)$
+    }
+
+    \begin{align*}
+        U_\mathcal{A} &= \lbrace 0, 1 \rbrace \\
+        I_\mathcal{A}(P) &= \lbrace 0 \rbrace \\
+        I_\mathcal{A}(Q) &= \lbrace 1 \rbrace
+    \end{align*}
+
+    In this counterexample, the premise $\exists xPx \land \exists yQy$ holds when $x = 0$ and $y = 1$. The conclusion $\exists x(Px \land Qx)$ does not hold because
+    $I_\mathcal{A}(P) \cup I_\mathcal{A}(Q) = \emptyset$.
 
 \end{enumerate}
+\end{enumerate}
+\bigskip
+\section{Docendo discimus}
+
+\textit{Design a question suitable for a final exam on formal logic.}\\
+        \\
+
+    \begin{enumerate}
+        \item Explain in your own words the difference between classical and intuitionistic logic.\\
+            {\color{Gray}
+             In classical logic we can use the classical absurdity rule, meaning we can make an assumption, come to an absurdity, and therefore conclude that the original assumption was false.
+             In intuitionistic logic, we cannot assume that every variable is either true or false (that is to say the law of excluded middle does not hold), which also means we cannot derive a number of common
+             classical rules such as double negation elimenation. The relation between classical and intuitionistic logic is that intuitionistic is a subset of classical logic, meaning any derivation in intuitionistic
+             logic is also valid in classical logic.
+            }
+            \bigskip
+            \item Provide a deduction in classical logic which cannot be made in intuitionistic Logic.\\
+                $ \neg \neg \alpha \vdash \alpha $
+                \text{\color{Gray}
+                    \begin{prooftree}
+                        \AxiomC{}
+                        \RightLabel{1}
+                        \UnaryInfC{$\neg \alpha$}
+                        \AxiomC{$\neg \neg \alpha$}
+                        \RightLabel{$\to E$}
+                        \BinaryInfC{$\bot$}
+                        \RightLabel{$\bot, 1$}
+                        \UnaryInfC{$\alpha$}
+                    \end{prooftree}
+                }
+            
+    \end{enumerate}
+
+
+
+\begin{enumerate}
+            \item \textit{Explain carefully what part of the course your question examines, and state why that topic is important.}\\
+        This question is examining the difference between intuitionistic and classical logic. This is important because it helps to demonstrate a fundamental understanding
+        of the differences between the fields of formal logic. It also tests understanding of both the intuitionistic and classical absurdity rules.
+
+    \item \textit{Write a model solution for your question.}\\
+        This is included with the question. Part 2 could be answered with any valid classical deduction which is invalid in intuitionistic logic. 
+
+    \item \textit{In light of your answers above, comment on the suitability of your question for a time limited final exam.} \\
+        We believe this question is very suitable for an early question in a time limited exam, as it is made up of two small parts which can easily be answered in a short time, but it tests deeper understanding of the underlying principals if the student chooses to provide more detailed answers.
+\end{enumerate}
+
 \end{document}
